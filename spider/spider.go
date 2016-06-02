@@ -23,7 +23,7 @@ type Spider_info Spider
 
 func (s *Spider) init() (err error) {
 	if s.status != uninit {
-		err_string := fmt.Printf("Spider is already inited!, Spider status is %+v", s.status)
+		err_string := fmt.Sprintf("Spider is already inited!, Spider status is %+v", s.status)
 		return errors.New(err_string)
 	}
 
