@@ -14,13 +14,13 @@ const (
 )
 
 type Spider struct {
-    start_urls          []string
-    start_task_count    int
-    finish_task_count   int
-    status              int
-    quit_chan           chan int
-    start_time          time.Time
-    end_time            time.Time
+    start_urls        []string
+    start_task_count  int
+    finish_task_count int
+    status            int
+    quit_chan         chan int
+    start_time        time.Time
+    end_time          time.Time
 }
 
 func (s *Spider) Init() (err error) {
@@ -43,24 +43,24 @@ func (s *Spider) Set_start_urls(url string) (err error) {
     return nil
 }
 
-func (s *Spider) Start_crawl() (err error) {
+func (s *Spider) Start_crawl(ch chan int) (err error) {
     s.status = started
     s.start_time = time.Now()
 
     for _, value := range s.start_urls {
         s.start_task_count++
-        go Do_crawl(value, s.quit_chan)
+        Do_crawl(value, s.quit_chan, ch)
     }
 
     // 判断是否所有协程都执行完
-    for true {
-        <-s.quit_chan
-        s.finish_task_count++
+    //    for true {
+    //        <-s.quit_chan
+    //        s.finish_task_count++
 
-        if s.finish_task_count == s.start_task_count {
-            break
-        }
-    }
+    //        if s.finish_task_count == s.start_task_count {
+    //            break
+    //        }
+    //    }
 
     s.status = end
     s.end_time = time.Now()

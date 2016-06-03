@@ -26,10 +26,13 @@ func main() {
         return
     }
 
+    // pipline 结束chan
+    pipeline_chan := make(chan int)
+
     // 执行爬取
     start_time := time.Now()
     spider_info.Set_start_urls(start_url)
-    spider_info.Start_crawl()
+    spider_info.Start_crawl(pipeline_chan)
 
     log.Printf(
         "%s\t%s",
